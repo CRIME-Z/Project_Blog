@@ -1,0 +1,219 @@
+
+/*本设置基于bootstrap.css（自动生成less文件）上的基础markdown设置*/
+
+/*全局设置*/
+#markdown {
+    font-family: "微软雅黑","Microsoft YaHei","\5FAE\8F6F\96C5\9ED1";/*中文字体时加英文小写双引号,英文，Unicode编码提高兼容性*/
+    font-size: 14px;
+    /*em指的是相对单位，当前对象内字体的尺寸，默认浏览器16px*/
+    /*http://www.w3school.com.cn/cssref/css_units.asp*/
+    line-height: 1.5em;
+    /*行高*/
+    letter-spacing: 0em;
+    /*字符间距*/
+}
+
+#markdown h1 {
+    font-size: 2em;
+    line-height: 1.75em
+
+}
+
+#markdown h2 {
+    font-size: 1.75em;
+    line-height: 1.5em
+
+}
+
+#markdown h3 {
+    font-size: 1.5em;
+    line-height: 1.25em
+
+}
+
+#markdown h4 {
+    font-size: 1.25em;
+    line-height: 1em
+
+}
+
+#markdown h5 {
+    font-size: 1em;
+    line-height: 0.86em
+
+}
+
+#markdown h6 {
+    font-size: 0.86em;
+    line-height: 0.75em
+
+}
+
+#markdown h4,
+#markdown h5,
+#markdown p,
+#markdown ul,
+#markdown ol,
+#markdown pre,
+#markdown blockquote,
+#markdown table {
+    margin: 1.5em 0
+}
+
+
+
+#markdown h1+.widget-codetool+pre,
+#markdown h2+.widget-codetool+pre,
+#markdown h3+.widget-codetool+pre {
+    margin-top: 1.5em !important;
+}
+
+
+#markdown h1,
+#markdown h2 {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px
+}
+
+#markdown>h1:first-child,
+#markdown h2:first-child,
+#markdown h3:first-child,
+#markdown h4:first-child,
+#markdown p:first-child,
+#markdown ul:first-child,
+#markdown ol:first-child,
+#markdown pre:first-child,
+#markdown blockquote:first-child {
+    margin-top: 0
+}
+
+
+#markdown ul,
+#markdown ol {
+    margin-left: 3em;
+    padding-left: 0
+}
+
+#markdown ul li,
+#markdown ol li {
+    margin: .3em 0
+}
+
+#markdown ul ul,
+#markdown ul ol,
+#markdown ol ul,
+#markdown ol ol {
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+
+#markdown ul p,
+#markdown ol p {
+    margin: 0
+}
+
+#markdown p:last-child {
+    margin-bottom: 0
+}
+
+#markdown p>p:empty,
+#markdown div>p:empty,
+#markdown p>div:empty,
+#markdown div>br:only-child,
+#markdown p+br {
+    display: none
+}
+
+#markdown img,
+#markdown video,
+#markdown audio {
+    position: static !important;
+    max-width: 100%
+}
+
+#markdown img {
+    padding: 3px;
+    border: 1px solid #ddd
+}
+
+#markdown img.emoji {
+    padding: 0;
+    border: none
+}
+
+#markdown blockquote {
+    border-left: 2px solid #009A61;
+    background: #F6F6F6;
+    color: #555;
+    font-size: 1em
+}
+
+
+#markdown pre,
+code {
+    font-size: 0.93em;
+}
+
+
+#markdown pre {
+    padding: 1em;
+    border: none;
+    line-height: 1.45;
+    max-height: 35em;
+    position: relative;
+    background: url(/static/images/blueprint.png) #F6F6F6;
+    /*url用/!!!!!*/
+    background-size: 30px, 30px;
+    -moz-background-size: 30px, 30px;
+    -o-background-size: 30px, 30px;
+    -webkit-background-size: 30px, 30px;
+}
+
+#markdown pre code {
+    background: none;
+    font-size: 1em;
+    overflow-wrap: normal;
+    white-space: inherit
+}
+
+#markdown hr {
+    margin: 1.5em auto;
+    border-top: 2px dotted #eee
+}
+
+#markdown kbd {
+    margin: 0 4px;
+    padding: 3px 4px;
+    background: #eee;
+    color: #555
+}
+
+#markdown .x-scroll {
+    overflow-x: auto
+}
+
+#markdown table {
+    width: 100%
+}
+
+#markdown table th,
+#markdown table td {
+    border: 1px solid #E6E6E6;
+    padding: 5px 8px;
+    word-break: normal
+}
+
+#markdown table th {
+    background: #F3F3F3
+}
+
+#markdown a:not(.btn) {
+    border-bottom: 1px solid rgba(0, 154, 97, 0.25);
+    padding-bottom: 1px
+}
+
+#markdown a:not(.btn):hover {
+    border-bottom: 1px solid #009a61;
+    text-decoration: none
+}

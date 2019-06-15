@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <!-- 字体-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <!-- 标题栏logo-->
+    <link rel="icon" href="/static/images/logo.ico" type="image/x-icon">
+    <!-- 收藏夹logo-->
+    <link rel="shortcut icon" href="/static/images/logo.ico" type="image/x-icon">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>eosones | 高效生活</title>
+    <style type="text/css">
+    body,
+    html {
+        font-family: 'Open Sans', sans-serif;
+        text-rendering: optimizeLegibility !important;
+        -webkit-font-smoothing: antialiased !important;
+        color: #1b1b1b;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        line-height: 1.5;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    h2 {
+        margin: 0 0 20px 0;
+        color: #555;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 400;
+        font-size: 30px;
+    }
+
+    h3,
+    h4 {
+        color: #222;
+        font-size: 18px;
+        font-weight: 300;
+        letter-spacing: 1px;
+    }
+
+    h5 {
+        text-transform: uppercase;
+        font-weight: 700;
+        line-height: 20px;
+    }
+
+    /*--------------------*/
+    /* EOSONES */
+    /*--------------------*/
+
+    .intro {
+        display: table;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+        color: #999;
+    }
+
+    .introBGround {
+        /*背景图片全屏方法*/
+        position: fixed;
+        top: 0;
+        z-index: -10;
+        width: 100%;
+        height: 100%;
+        min-width: 1000px;
+        background: url(/static/images/intro-bg.jpg) no-repeat center top;
+        background-color: #e5e5e5;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+
+    .intro h1 {
+        font-size: 60px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        color: #ffffff;
+    }
+
+    .intro p {
+        font-size: 20px;
+        margin-bottom: 40px;
+        margin-top: 20px;
+    }
+
+    header .intro-text {
+        padding-top: 200px;
+        padding-bottom: 200px;
+    }
+
+    hr {
+        height: 1px;
+        width: 70px;
+        text-align: center;
+        position: relative;
+        background: #666;
+        margin: 0 auto;
+        margin-bottom: 30px;
+        border: 0;
+    }
+
+    .btn-default {
+        text-transform: uppercase;
+        color: #fff;
+        background-color: #0097ab;
+        border-color: #0097ab;
+        padding: 14px 20px;
+        margin: 0;
+        font-size: 16px;
+        border-radius: 0;
+        margin-top: 20px;
+    }
+
+    .btn-default:hover,
+    .btn-default:focus,
+    .btn-default.focus,
+    .btn-default:active,
+    .btn-default.active {
+        color: #999;
+        background-color: transparent;
+        border-color: #777;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="intro">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1>eosones</h1>
+                        <hr>
+                        <p>Delicacy • Efficient • Life</p>
+                        <a href="/homepage/" class="btn btn-default btn-lg page-scroll">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="introBGround">
+            </div>
+        </div>
+    </header>
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+</body>
+
+</html>

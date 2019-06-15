@@ -1,0 +1,253 @@
+{%extends "content-base.html" %}
+{% load comment_tags %}
+{% block csslink %}
+{% endblock %}
+{% block title %} EOSONES | 技术博客 {% endblock %}
+{% block css %}
+<style type="text/css">
+/*———————————————————————————————主体内容——————————————————————————————————*/
+.arcicle-sort {
+    background: #fff;
+    height: 35px;
+    width: 100%;
+    margin: 0 0 10px 0;
+}
+
+.arcicle-sort div {
+    padding: 7px 20px;
+}
+
+.arcicle-sort span {
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+.arcicle-sort a {
+    color: #0097ab;
+}
+
+.arcicle-sort a:hover {
+    color: #108595;
+}
+
+.arcicle-list {
+    min-height: 217px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 20px 15px 30px 20px;
+    background: #ffffff;
+    position: relative;
+}
+
+
+.arcicle-list header {
+    min-height: 26px;
+    margin: 0 10px 15px 0;
+
+}
+
+.arcicle-list .label {
+    background-color: #0097ab;
+    margin-right: 5px;
+    position: relative;
+    top: -2px;
+    padding: 2px 6px 4px;
+}
+
+.arcicle-list .label:hover {
+    background-color: #108595;
+}
+
+.arcicle-list h4 {
+    display: inline;
+    margin: 0;
+    position: relative;
+    top: 1px;
+
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    margin-left: 10px;
+    font-family: "msyh", sans-serif;
+}
+
+.arcicle-list h4 a {
+    color: #0097ab;
+}
+
+.arcicle-list h4 a:hover {
+    color: #007888;
+}
+
+.arcicle-list .focus {
+    height: 114px;
+    width: 200px;
+    margin-right: 20px;
+    display: inline;
+    overflow: hidden;
+    float: left;
+}
+
+.arcicle-list .thumb {
+    height: 100%;
+    width: 100%;
+    transition: all 0.6s;
+}
+
+.arcicle-list .thumb:hover {
+    transform: scale(1.1);
+}
+
+.arcicle-list .note {
+
+    color: #777;
+    line-height: 24px;
+    margin-bottom: 0;
+    font-style: normal;
+}
+
+.arcicle-list .auth-span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-bottom: 10px;
+    line-height: 20px;
+
+}
+
+.arcicle-list .muted {
+    color: #999;
+    font-size: 13px;
+    margin-right: 17px;
+    position: relative;
+    display: inline-block;
+}
+
+.arcicle-list .muted a {
+    color: #0097ab;
+    font-size: 13px;
+}
+
+.arcicle-list .muted a:hover {
+    color: #007888;
+    font-size: 13px;
+}
+/*———————————————————————————————分页——————————————————————————————————*/
+.PageList {
+    text-align: center;
+}
+
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="arcicle-sort">
+    <div>
+        <span>
+            <a href="/category/technique/newest/">最新</a>
+        </span>
+        <span>
+            <a href="/category/technique/hottest/">热门</a>
+        </span>
+        <span class="pull-right">
+            <a href="/all/rss/">RSS订阅</a>
+        </span>
+    </div>
+</div>
+{% for article in articleList %}
+<div class="arcicle-list">
+    <header>
+        <a class="label label-info" href="/category/technique/{{article.category.name}}/">{{article.category.name}}</a>
+        <h4>
+            <a href="/article/{{article.slug}}/" target="_blank" title="生活笔录 | 你真的适合零基础跨专业转行吗？">{{article.title}} </a>
+        </h4>
+    </header>
+    <div class="focus">
+        <a href="/article/{{article.slug}}/" target="_blank">
+            <img class="thumb img-rounded" src="{{article.img_link}}">
+        </a>
+    </div>
+    <span class="note">
+        {{article.summary}}
+    </span>
+    <p class="auth-span">
+        <span class=" muted">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <a href="#">{{article.author}}</a>
+        </span>
+        <span class=" muted">
+            <span class=" glyphicon glyphicon-time" aria-hidden="true"></span>
+            <span>{{article.create_date | date:"Y-m-j"}}</span>
+        </span>
+        <span class=" muted">
+            <span class=" glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+            <span>{{article.views}}&#32;阅读</span>
+        </span>
+        <span class=" muted">
+            <span class=" glyphicon glyphicon-comment" aria-hidden="true"></span>
+            <span>{% get_comment_count article.id as commentscount %}{{commentscount}}&#32;评论</span>
+        </span>
+        <span class=" muted">
+            <span class="like glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+            <span>{{article.loves}}&#32;赞</span>
+        </span>
+    </p>
+</div>
+{% endfor %}
+<!--分页-->
+{% if is_paginated %}
+<div class="PageList">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm">
+
+            <li class="{% if not page_obj.has_previous %} disabled {% endif %}">
+                <a href="{% if page_obj.has_previous %} ?page={{ page_obj.previous_page_number }} {% endif %}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {% if first %}
+            <li>
+                <a href="?page=1">1</a>
+            </li>
+            {% endif %}
+            {% if left %}
+            {% if left_has_more %}
+            <li>
+                <span>...</span>
+            </li>
+            {% endif %}
+            {% for i in left %}
+            <li>
+                <a href="?page={{ i }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+            {% endif %}
+            <li class="active"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+            {% if right %}
+            {% for i in right %}
+            <li>
+                <a href="?page={{ i }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+            {% if right_has_more %}
+            <li>
+                <span>...</span>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% if last %}
+            <li>
+                <a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+            </li>
+            {% endif %}
+            <li class="{% if not page_obj.has_next %} disabled {% endif %}">
+                <a href="{% if page_obj.has_next %} ?page={{ page_obj.next_page_number }} {% endif %}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endif %}
+{% endblock %}

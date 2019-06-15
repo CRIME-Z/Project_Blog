@@ -1,0 +1,73 @@
+{%extends "accounts-base.html" %}
+{% load i18n %}
+{% block csslink %}
+{% endblock %}
+{% block title %} 个人中心 {% endblock %}
+{% block css %}
+<style type="text/css">
+.contentbg {
+    background: #fff;
+    text-align: center;
+    position: fixed;
+    top: 110px;
+    bottom: 0;
+    padding: 0 20px;
+
+}
+
+.title {
+    border-bottom: 1px solid #eee;
+    padding: 10px 20px 8px;
+
+}
+
+.title h2 {
+    color: #0097ab;
+}
+
+.explain {
+    margin: 60px 0 30px 0;
+    padding: 0 30px;
+}
+
+.wechat {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.wechat img {
+    width: 100%;
+}
+
+.qq {
+
+    max-width: 226px;
+    margin: 20px auto 0 auto;
+    padding: 0 300px;
+
+}
+
+.qq img {
+    width: 100%;
+
+}
+</style>
+{% endblock%}
+{% block content %}
+<!-- content -->
+<div class="contentbg">
+    <div class="title">
+        <h2>赞助作者</h2>
+    </div>
+    <div class="explain">
+        <p>如果您喜欢我的文章，感觉我的文章对您有帮助，不妨动动您的金手指给予<strong>任意金额</strong>赞助，予人玫瑰，手有余香，不胜感激。</p>
+    </div>
+    <div class="wechat">
+        <img src="\media\images\pay.jpg">
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+</script>
+{% endblock %}

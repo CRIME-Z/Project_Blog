@@ -1,0 +1,105 @@
+{%extends "accounts-base.html" %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load account %}
+{% block csslink %}
+{% endblock %}
+{% block title %}确认邮箱地址{% endblock %}
+{% block css %}
+<style type="text/css">
+.contentbg {
+    background: #fff;
+    position: fixed;
+    top: 110px;
+    bottom: 0;
+    padding: 0 20px;
+
+}
+
+.accountbg {
+    max-width: 500px;
+    min-height: 350px;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: #cccccc;
+    /*根据父级标签水平居中*/
+    margin: 0 auto;
+
+    position: relative;
+    top: 100px;
+
+    padding: 10px 30px;
+
+}
+
+.accountbg h2 {
+    color: #0097ab;
+    /*作用于子标签全部水平居中*/
+    text-align: center;
+}
+
+.presentation {
+    font-size: 17px;
+    color: #7e7e7e;
+    /*作用于子标签全部水平居中*/
+    text-align: center;
+    margin: 40px 0;
+}
+
+
+.list-group {
+    margin: 0 auto;
+    line-height: 28px;
+    min-height: 235px;
+    max-width: 370px;
+    padding: 30px 0;
+}
+
+form button{
+    background-color: #00afc6;
+    color: #fff;
+    border-color: transparent;
+}
+
+
+form button:hover {
+    background-color: #0093a6;
+    color: #fff;
+}
+</style>
+{% endblock%}
+{% block content %}
+<!-- content -->
+<div class=" contentbg">
+    <div class="accountbg">
+        <h2>邮箱确认</h2>
+        <hr>
+        <div class="list-group">
+            {% if confirmation %}
+            {% user_display confirmation.email_address.user as user_display %}
+            <p class="presentation">{% blocktrans with confirmation.email_address.email as email %}请确认<a href="mailto:{{ email }}">{{ email }}</a><br>
+                是否是用户{{ user_display }}的邮箱地址{% endblocktrans %}<br>
+            </p>
+            <form method="post" action="{% url 'account_confirm_email' confirmation.key %}" >
+                {% csrf_token %}
+                <button type="submit" class="center-block btn btn-default">确认</button>
+            </form>
+            {% else %}
+            {% url 'account_email' as email_url %}
+            <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% if messages %}
+<div>
+    <strong>Messages:</strong>
+    {{messages.0}}
+</div>
+{% endif %}
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+</script>
+{% endblock %}

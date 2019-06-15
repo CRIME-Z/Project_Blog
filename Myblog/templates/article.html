@@ -1,0 +1,856 @@
+{%extends "content-base.html" %}
+{% load comment_tags %}
+{% load blog_tags %}
+{% block csslink %}
+<!--自定义md代码高亮-->
+<link rel="stylesheet" type="text/css" href="/static/css/md/default.css">
+<!--自定义md样式-->
+<link rel="stylesheet" type="text/css" href="/static/css/md/md.css">
+<!--Font Awesome 图标web link-->
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+{% endblock %}
+{% block title %} {{article.title}} {% endblock %}
+{% block css %}
+<style type="text/css">
+/*———————————————————————————————主体内容——————————————————————————————————*/
+.arcicle {
+    width: 100%;
+    margin-bottom: 10px;
+
+    background: #ffffff;
+    position: relative;
+}
+
+.arcicle-address {
+    font-size: 13px;
+    color: #b1b1b1;
+    padding: 10px 25px 8px 25px;
+
+    border-bottom: 0.5px solid #ebebeb;
+}
+
+.infom {
+    font-size: 13px;
+    color: #b1b1b1;
+    padding: 5px 25px 15px 25px;
+    border-bottom: 0.5px solid #ebebeb;
+    padding-bottom: 8px;
+    margin-bottom: 5px;
+}
+
+.arcicle-address a {
+    color: #009fb5;
+}
+
+.arcicle-address a:hover {
+    color: #009fb5;
+}
+
+.arcicle-address small {
+    margin: 0 2px;
+}
+
+.arcicle-title {
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.arcicle-title a {
+    color: #444;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 40px;
+}
+
+
+
+#markdown {
+    margin-top: 26px;
+    padding: 0px 25px 20px 25px;
+
+}
+
+/*———————————————————————————————文章结尾——————————————————————————————————*/
+.afterbody {
+    border-bottom: 0.5px solid #ebebeb;
+    padding: 0 25px;
+}
+
+.share {
+    position: relative;
+}
+
+.share .sharelist {
+    position: absolute;
+    right: 0px;
+    font-size: 0;
+}
+
+.share .like {
+    position: absolute;
+    left: 0px;
+    color: #9a9a9a;
+}
+
+.share .like a {
+    color: #a2a2a2;
+    font-size: 15px;
+}
+
+.share .like a:hover .loves {
+    color: #fff;
+    background: #009fb5;
+}
+
+.lovecount {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.loves {
+    font-size: 12px;
+    color: #009fb5;
+    background: #eafcff;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    padding: 4px;
+}
+
+.loveshave {
+    color: #fff;
+    background: #009fb5;
+    font-size: 12px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    padding: 4px;
+}
+
+
+
+.share .fa-weixin {
+    color: #2ba246;
+}
+
+.share .fa-weixin:hover {
+    color: #078324;
+}
+
+.share .fa-qq {
+    color: #448aff;
+    font-size: 16px;
+}
+
+.share .fa-qq:hover {
+    color: #0051d8;
+}
+
+.share .fa-weibo {
+    color: #f90000;
+}
+
+.share .fa-weibo:hover {
+    color: #e10000;
+}
+
+.share small {
+    color: #9a9a9a;
+}
+
+.share small:hover {
+    color: #727272;
+}
+
+.reward {
+    padding-top: 40px;
+    margin-bottom: 20px;
+}
+
+.arcicletag {
+    color: #a2a2a2;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.arcicletag span {
+    margin-right: 5px;
+}
+
+.arcicletag a {
+    color: #009fb5;
+    background-color: #eafcff;
+}
+
+.arcicletag .label-default:hover {
+    color: #fff;
+    background-color: #009fb5;
+}
+
+.Pagedu {
+    background: #fbfbfb;
+    height: 40px;
+    padding: 0 25px;
+    position: relative;
+    line-height: 40px;
+    font-size: 12px;
+}
+
+.Pagedu a {
+    color: #00acb2;
+}
+
+.Pagedu a:hover {
+    color: #0078a4;
+}
+
+.Qrcodebg {
+    height: 256px;
+    width: 256px;
+    margin-bottom: 20px;
+}
+
+/*———————————————————————————————文章评论——————————————————————————————————*/
+.comment {
+    width: 100%;
+    background: #ffffff;
+    margin-bottom: 10px;
+}
+
+.hint {
+    padding: 10px 25px;
+    height: 40px;
+    border-bottom: 0.5px solid #ebebeb;
+}
+
+.hint a {
+    color: #00acb2;
+}
+
+.hint a:hover {
+    color: #0078a4;
+}
+
+.Commentbox {
+    height: 158px;
+    padding: 15px 25px;
+
+    position: relative;
+}
+
+.headsculpture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 1px solid #eee;
+    background-color: #fff;
+    overflow: hidden;
+    position: absolute;
+    top: 20px;
+    left: 25px;
+
+}
+
+.headsculpture img {
+    width: 100%
+}
+
+.ctextarea {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    left: 88px;
+}
+
+.ctextarea textarea {
+    font-size: 12px;
+}
+
+.Commentbox button {
+    position: absolute;
+    bottom: 12px;
+    right: 25px;
+    font-size: 12px;
+
+}
+
+.Commentbox a {
+    color: #00acb2;
+    position: absolute;
+    top: 114px;
+    left: 90px;
+    font-size: 12px;
+
+}
+
+.Commentbox a :hover {
+    color: #0078a4;
+
+}
+
+
+/*———————————————————————————————父级评论——————————————————————————————————*/
+.Commentlist {
+    padding: 0 25px;
+    border-bottom: 0.5px solid #ebebeb;
+
+    font-size: 14px;
+    line-height: 1.42858;
+    color: #333;
+}
+
+.comments-item {
+    padding: 15px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.09);
+}
+
+.avatar-32 {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+
+}
+
+.comments-content {
+    padding-left: 62px;
+}
+
+.comment-trigger {
+    margin-bottom: 10px;
+    margin: 0;
+    color: #999;
+    font-size: 13px;
+}
+
+.commentsmd {
+    padding: 10px 0 !important;
+    font-size: 13px !important;
+    line-height: 1.5em !important;
+}
+
+
+.comment-reply a {
+    color: #00acb2;
+}
+
+.replyclick {
+    color: #00acb2;
+}
+
+.replyclick:hover {
+    color: #0078a4;
+}
+
+
+.comment-reply a:hover {
+    color: #0078a4;
+}
+
+/*———————————————————————————————子级评论——————————————————————————————————*/
+
+.reply-list {
+
+    padding-left: 60px;
+    padding-bottom: 18px;
+}
+
+.reply-item {
+    width: 100%;
+    padding-bottom: 8px;
+    background: #fafafa;
+    border-bottom: 0.5px dotted #ebebeb;
+}
+
+.reply-content {
+    padding: 15px 0 0 0;
+}
+
+.repaymd {
+    padding: 0px 10px 5px 52px !important;
+    font-size: 13px !important;
+    line-height: 1.5em !important;
+    /*自动换行*/
+    word-wrap: break-word;
+}
+
+.reply-trigger {
+    color: #999;
+    font-size: 13px;
+    padding-left: 32px;
+}
+
+.comments-item .reply-form {
+
+    padding-left: 60px;
+
+}
+
+.reply-item .reply-form {
+    padding-left: 20px;
+}
+
+.reply-form button {
+    font-size: 13px;
+    margin-right: 7px;
+    margin-top: 2px;
+
+}
+
+.replyform {
+    background: #fafafa;
+    padding: 8px 8px;
+
+}
+
+.form-group {
+    position: relative;
+    margin-right: 98px;
+    margin-bottom: 0;
+}
+/*———————————————————————————————目录——————————————————————————————————*/
+.catalog{
+    position: fixed;
+    right: 422px;
+    top: 130px;
+    width: 240px;
+    max-height: 700px;
+    background-color: #fff;
+    padding: 20px 20px;
+    opacity:0;
+    transition: opacity 0.4s linear 0s;
+    /* Safari */
+    -webkit-transition:opacity 0.4s linear 0s;
+}
+
+.catalog p,{
+    color: #767676;
+    font-size: 17px;
+    line-height: 35px;
+}
+.top{
+    color: #767676;
+    line-height: 35px;
+}
+.catalog ul,.catalog li{
+    list-style-type:none;
+    font-size: 15px;
+    line-height: 27px;
+}
+.catalog a{
+    color: #767676;
+}
+
+.catalog a:hover{
+   color: #0078a4;
+}
+</style>
+{% endblock %}
+{% block content %}
+<!-- 文章-->
+<div class="arcicle">
+    <div class="arcicle-address">
+        <a href="/homepage/" class="glyphicon glyphicon-home" aria-hidden="true"></a>
+        <small>></small>
+        <a href="/category/{{article.category.bigcategory.slug}}/">{{article.category.bigcategory.name}}</a>
+        <span>></span>
+        <a href="/category/{{article.category.bigcategory.slug}}/{{article.category.slug}}/">{{article.category.name}}</a>
+        <small>></small>
+        <span>{{article.title}}</span>
+    </div>
+    <h1 class="arcicle-title">
+        <a href="">{{article.title}}</a>
+    </h1>
+    <div class="infom">
+        <span>{{article.create_date | date:"Y-m-j"}}</span>
+        <small>&#32;•&#32;</small>
+        <span>{{article.views}}&#32;阅读</span>
+        <small>&#32;•&#32;</small>
+        <span>{% get_comment_count article.id as commentscount %}{{commentscount}}&#32;评论</span>
+    </div>
+    <div id="markdown">
+        <!--body章后加上过滤器，表示当前html不需要转义-->
+        {{article.body|safe}}
+    </div>
+    <div class=" afterbody ">
+        <div class="share">
+            <ul class="list-inline like">
+                <li>
+                    {% if user.is_authenticated %}
+                    {% is_likes article.id user.id as is_lik %}
+                    {% if is_lik %}
+                    <span>
+                        <span class="fa fa-thumbs-up loveshave"></span>
+                        <span class="x">×</span>
+                        <span class="lovecount">{{article.loves}}</span>
+                        <small>已赞</small>
+                    </span>
+                    {% else %}
+                    <a class="thumbupt" href="javascript:void(0);">
+                        <span class="fa fa-thumbs-up loves"></span>
+                        <span>×</span>
+                        <span class="lovecount">{{article.loves}}</span>
+                        <small>赞</small>
+                        <form method="POST" action="" novalidate='novalidate'>
+                            <input type='hidden' name='like_post_ID' value='{{ article.id }}' id='like_post_ID' />
+                            <input type='hidden' name='like_author' value='{{ user.id }}' id='like_author' />
+                        </form>
+                    </a>
+                    {% endif %}
+                    {% else %}
+                    <a class="thumbupt" href="javascript:void(0);">
+                        <span class="fa fa-thumbs-up loves"></span>
+                        <span class="x">×</span>
+                        <span class="lovecount">{{article.loves}}</span>
+                        <small>赞</small>
+                    </a>
+                    {% endif %}
+                </li>
+            </ul>
+            <ul class="list-inline sharelist">
+                <li id="fa-weibo">
+                    <a target="_blank" href="http://service.weibo.com/share/share.php?url=count=1&url=/article/{{article.sulg}}/&title={{article.title}}&appkey=Eonones&pic={{article.img_link}}" class="fa fa-weibo"></a>
+                </li>
+                <li>
+                    <a target="_blank" href=" http://connect.qq.com/widget/shareqq/index.html?url=/article/{{article.sulg}}&desc=EOSONES&title={{article.title}}&summary={{article.summary}}&pics={{article.img_link}}&flash=&site=www.eosones.com&callback=/article/{{article.sulg}}" class="lqq fa fa-qq" title="QQ登录"></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="fa fa-weixin" data-toggle="modal" data-target="#Qrcode"></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"><small>•••</small></a>
+                </li>
+            </ul>
+        </div>
+        <div class="reward">
+            <button type="button" class="btn btn-info center-block" data-toggle="modal" data-target="#Reward ">赞赏支持</button>
+        </div>
+        <div class="arcicletag">
+            <span class="sider-tag glyphicon glyphicon-tags" aria-hidden="true"></span>
+            {% get_article_tag article.id as tags%}
+            {% for tag in tags %}
+            <a href="/tags/{{tag.name}}/" class="tag-icon label label-default">#{{tag.name}}</a>
+            {% endfor%}
+        </div>
+    </div>
+    <div class=" Pagedu">
+        {% get_article_previous article.id as article_previous%}
+        <a style="position: absolute;left: 25px;" href="/article/{{article_previous.slug}}/">
+            <p><small class="fa fa-angle-double-left"></small>&#32;{{article_previous.title}}</p>
+        </a>
+        {% get_article_next article.id as article_next%}
+        <a style="position: absolute;right: 25px;" href="/article/{{article_next.slug}}/">
+            <p>{{article_next.title}}&#32;<small class="fa fa-angle-double-right"></small></p>
+        </a>
+    </div>
+</div>
+<!-- 评论 -->
+<div class="comment">
+    <div class="hint">
+        <div class="pull-left">{% get_comment_count article.id as commentscount %}{{commentscount}}&#8197;评论</div>
+        <div class="pull-right">
+            {% if user.is_authenticated %}
+            {{user.username}}
+            {% else %}
+            <a id="unauthenticated" href="/accounts/login/" target="view_window">未登录用户</a>
+            {%endif%}
+        </div>
+    </div>
+    <div class="Commentbox ">
+        <div class="headsculpture">
+            <img {% if user.is_authenticated %} src="{{user.avatar.url}}" {% else %} src="\media\avatar\default.png" {% endif %} />
+        </div>
+        <!-- form表单 -->
+        <form method="POST" action="" novalidate='novalidate'>
+            <!-- form隐藏信息 -->
+            <div class="comt-tips pull-right">
+                <input type='hidden' name='comment_post_ID' value='{{ article.id }}' id='comment_post_ID' />
+                <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+                <input type='hidden' name='comment_author' value='{{ user.username }}' id='comment_author' />
+            </div>
+            <div class="ctextarea">
+                <textarea class="form-control" rows="4" name="arciclecomment"></textarea>
+            </div>
+            <button id="arciclecommentb" type="button" class="btn btn-success">提交评论</button>
+            <a href="https://guides.github.com/features/mastering-markdown/" class="glyphicon glyphicon-info-sign" target="view_windown">&#8197;支持Markdown</a>
+        </form>
+    </div>
+    <!-- 评论区 -->
+    <div class="Commentlist">
+        <!-- 每个父级评论 -->
+        {% get_parent_comments article.id as comments %}
+        {% for comment in comments%}
+        <div class="comments-item">
+            <div class="pull-left">
+                <img class="avatar-32" src="{{comment.author.avatar.url}}">
+            </div>
+            <div class="comments-content">
+                <div class="comment-trigger">
+                    <strong>{{comment.author.username}}</strong>
+                    <span class="comments-isAuthor">·</span>
+                    <span class="comments-date">{{comment.create_date | date:"Y-m-j"}}</span>
+                </div>
+                <div style="width: 100%">
+                    <div id="markdown" class="commentsmd">
+                        <!--django自定义模板语言，转为md-->
+                        {% content_to_markdown comment.content as content%}
+                        {{content |safe}}
+                    </div>
+                </div>
+                <div class="comment-reply">
+                    <a href="javascript:void(0);" class="glyphicon glyphicon-thumbs-up">&#8197;赞&nbsp;</a>
+                    <a class="replyclick" href="javascript:void(0);">回复</a>
+                </div>
+            </div>
+            <div class="reply-form">
+                <form class="replyform hidden" method="POST" novalidate='novalidate'>
+                    <!-- form隐藏信息 -->
+                    <div class="comt-tips pull-right">
+                        <input type='hidden' name='comment_post_ID' value='{{ article.id }}' id='comment_post_ID' />
+                        <input type='hidden' name='comment_author' value='{{ user.username }}' id='comment_author' />
+                        <input type='hidden' name='comment_parent' id='comment_parent' value='{{comment.id}}' />
+                        <input type='hidden' name='comment_rep' id='comment_rep' value='{{comment.id}}' />
+                    </div>
+                    <button class="btn btn-default pull-right usercommentb" type="button">添加回复</button>
+                    <div class="form-group">
+                        <textarea class="form-control replyinput" name="arciclecomment" rows="1" placeholder="回复"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 子集评论 -->
+        <div class="reply-list">
+            {% get_child_comments comment.id as childcomments %}
+            {% for childcomment in childcomments%}
+            <!-- 每个子集评论 -->
+            <div class="reply-item">
+                <div class="reply-content">
+                    <div id="markdown" class="repaymd">
+                        {% content_to_markdown childcomment.content as content%}
+                        {{content |safe}}
+                    </div>
+                    <div class="reply-trigger">
+                        <span>—&#8197;<strong>{{childcomment.author.username}}</strong>&#8197;&#8197;回复&#8197;&#8197;<strong>{{childcomment.rep_to.author.username}}</strong></span>
+                        <span class="comments-date">· {{childcomment.create_date| date:"Y-m-j"}}</span>
+                        <a class="replyclick" href="javascript:void(0);">&#8197;回复</a>
+                    </div>
+                </div>
+                <div class="reply-form">
+                    <form class="replyform hidden" method="POST" novalidate='novalidate'>
+                        <!-- form隐藏信息 -->
+                        <div class="comt-tips pull-right">
+                            <input type='hidden' name='comment_post_ID' value='{{ article.id }}' id='comment_post_ID' />
+                            <input type='hidden' name='comment_author' value='{{ user.username }}' id='comment_author' />
+                            <input type='hidden' name='comment_parent' id='comment_parent' value='{{comment.id}}' />
+                            <input type='hidden' name='comment_rep' id='comment_rep' value='{{childcomment.id}}' />
+                        </div>
+                        <button class="btn btn-default pull-right usercommentb" type="button">添加回复</button>
+                        <div class="form-group">
+                            <textarea class="form-control replyinput" name="arciclecomment" rows="1" placeholder="回复"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        {%endfor%}
+    </div>
+</div>
+<!-- 打赏model -->
+<div id="Reward" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="gridSystemModalLabel">赞赏博主</h4>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">您的支持是博主写作最大的动力，如果觉文章对您有帮助，请任意打赏</div>
+                <div>
+                    <img style="width: 100%" src="\media\images\pay.jpg">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 二维码model -->
+<div id='Qrcode' class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <p class="text-center" style="margin: 15px 0;">打开微信“扫一扫”</p>
+            <div class="Qrcodebg center-block">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 侧边拦目录 -->
+<div class="catalog hidden">
+    <div>
+        <p>目录</p>
+        {{ article.toc|safe }}
+        <a href="javascript:void(0);" class="top">返回顶部</a>
+    </div>
+    
+</div>
+{% endblock %}
+{% block js %}
+<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+
+$('.top').on('click', function() {
+            $('body,html').animate({ scrollTop: 0 }, 300);
+});
+/*———————————————————————————————目录——————————————————————————————————*/
+
+var viewW = $(window).width();
+if (viewW+17>=1200){
+        var right=viewW*0.5-540;
+        var Cright=right.toString()+'px';
+        $(".catalog").removeClass('hidden').css({"right":Cright})
+}
+else if (viewW+17<1200&viewW+17>992){
+        var right=viewW*0.5-440;
+        var Cright=right.toString()+'px';
+        $(".catalog").removeClass('hidden').css({"right":Cright})
+}
+
+
+jQuery(window).bind('scroll', function() {
+    var scroH = $(document).scrollTop(); //滚动高度
+    /*出现导航栏与回到顶部*/
+    if (scroH  > 524) {
+        $(".catalog").removeClass('hidden')
+        /*hidden时需要延时设置属性才有过度效果*/
+        setTimeout('$(".catalog").css({"opacity":"1"})',10)
+    } else {
+        $(".catalog").addClass('hidden').css({"opacity":"0"})
+    }
+});
+
+jQuery(window).resize(function() {//实时
+    var viewW = $(window).width();
+    if (viewW+17>=1200){
+        var right=viewW*0.5-540;
+        var Cright=right.toString()+'px';
+        $(".catalog").removeClass('hidden').css({"right":Cright})
+    }
+    else if (viewW+17<1200&viewW+17>992){
+        var right=viewW*0.5-440;
+        var Cright=right.toString()+'px';
+        $(".catalog").removeClass('hidden').css({"right":Cright})
+    }
+    if (viewW+17<992){
+        $(".catalog").addClass('hidden')
+    }
+
+});
+
+/*———————————————————————————————二维码分享——————————————————————————————————*/
+$('#Qrcode').on('shown.bs.modal', function(e) {
+    $('#Qrcode .Qrcodebg').qrcode(window.location.href);
+}).on('hidden.bs.modal', function(e) {
+    $('#Qrcode').off('shown.bs.modal');
+});
+/*———————————————————————————————点赞——————————————————————————————————*/
+$('.thumbupt').on('click', function() {
+    if (document.body.contains(document.getElementById('unauthenticated'))) {
+        var r = confirm("登录用户才能点赞");
+        if (r == true) {
+            window.open("/accounts/login/");
+        };
+    } else if ($('.thumbupt').children('small').html() == '已赞') {
+        var r = confirm("已经赞过啦");
+    }
+    else {
+        var likedata = $(this).children('form').serialize();
+        $.ajax({
+            url: '/comment/addlike/',
+            type: 'POST',
+            data: likedata,
+            dataType: 'JSON',
+            success: function(data) { //为什么不需要反序列化？？？？
+                $('.thumbupt').children('small').html("已赞");
+                $('.thumbupt').children('.loves').removeClass('loves').addClass('loveshave');
+                $('.thumbupt').children('.lovecount').html(data.love);
+            },
+            error: function() { console.log("服务器错误，请重试"); }
+        });
+    };
+});
+/*———————————————————————————————提交回复——————————————————————————————————*/
+$('.replyclick').on('click', function() {
+    $("form[class='replyform']").addClass('hidden');
+    $(this).parent().parent().siblings('.reply-form').children('form').removeClass('hidden');
+});
+
+$('.usercommentb').on('click', function() {
+    //document.body.contains(element)判断是否存在标签返回布尔值
+    if (document.body.contains(document.getElementById('unauthenticated'))) {
+        var r = confirm("登录用户才能评论");
+        if (r == true) {
+            window.open("/accounts/login/");
+        }
+    } else {
+        var arciclecomment = $(this).next().children('textarea').val();
+        if (!arciclecomment) {
+            alert("请输入内容")
+        } else {
+            var repdata = $(this).parent().serialize();
+            console.log(repdata);
+            $.ajax({
+                url: '/comment/add/',
+                type: 'POST',
+                data: repdata,
+                dataType: 'JSON', // data数据设置为字符串类型（Python后台需把字符串反序列化）
+                success: function(data) {
+                    //var obj = JSON.parse(data); // data数据单独设置为字符串类型，反序列化
+                    $(this).parent().addClass('hidden');
+                    location.reload();
+                },
+                error: function() { console.log("服务器错误，请重试"); }
+            });
+        }
+    }
+});
+
+/*———————————————————————————————提交文章评论——————————————————————————————————*/
+$('#arciclecommentb').on('click', function() {
+    //document.body.contains(element)判断是否存在标签返回布尔值
+    if (document.body.contains(document.getElementById('unauthenticated'))) {
+        var r = confirm("登录用户才能评论");
+        if (r == true) {
+            window.open("/accounts/login/");
+        }
+    } else {
+        var arciclecomment = $(this).parent('form').find("textarea").val();
+        if (!arciclecomment) {
+            alert("请输入内容")
+        } else {
+            //serialize()序列化表单
+            data = $(this).parent('form').serialize()
+            $.ajax({
+                url: '/comment/add/',
+                type: 'POST',
+                data: data,
+                dataType: 'JSON', // data数据设置为字符串类型（Python后台需把字符串反序列化）
+                success: function(data) {
+                    //var obj = JSON.parse(data); // data数据单独设置为字符串类型，反序列化
+                    console.log(data);
+                    location.reload();
+                },
+                error: function() { console.log("服务器错误，请重试"); }
+            });
+        }
+    }
+
+})
+</script>
+{% endblock %}

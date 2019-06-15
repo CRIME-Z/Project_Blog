@@ -1,0 +1,13 @@
+{% load account %}
+{% user_display user as user_display %}
+{% load i18n %}
+{% autoescape off %}
+
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %} 来自{{ site_name }}的验证信息!
+您收到此电子邮件是因为用户{{ user_display }}已将您的电子邮件地址提供给我们以关联帐户。
+如果确认本人行为, 请点击链接完成验证{{ activate_url }}
+{% endblocktrans %}
+{% endautoescape %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!
+{{ site_domain }}
+{% endblocktrans %}

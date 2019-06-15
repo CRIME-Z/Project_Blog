@@ -1,0 +1,559 @@
+{%extends "accounts-base.html" %}
+{% load i18n %}
+{% block csslink %}
+<!--cropper-->
+<link rel="stylesheet" type="text/css" href="/static/css/plugin/cropper.min.css">
+{% endblock %}
+{% block title %} 个人中心 {% endblock %}
+{% block css %}
+<style type="text/css">
+/*———————————————————————————————模态框——————————————————————————————————*/
+/*直接设置img的宽高是没有效果的，但是可以在父盒子上（即.box）设置；*/
+.img-container {
+    display: block;
+    width: 568px;
+}
+
+#uploadPreview {
+    width: 100%;
+}
+
+.modal-footer .btn-primary {
+    background-color: #00afc6;
+    border-color: transparent;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #0093a6;
+    border-color: transparent;
+}
+
+/*———————————————————————————————个人信息—————————————————————————————————*/
+.contentbg {
+    background: #fff;
+    position: fixed;
+    top: 110px;
+    bottom: 0;
+    padding: 0 20px;
+
+}
+
+.accountbg {
+    max-width: 500px;
+    min-height: 440px;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: #cccccc;
+    /*根据父级标签水平居中*/
+    margin: 0 auto;
+
+    position: relative;
+    top: 100px;
+
+    padding: 10px 30px;
+    /*作用于子标签全部水平居中*/
+    text-align: center;
+}
+
+.accountbg h2 {
+    color: #0097ab;
+}
+
+.list-group {
+    margin: 0 auto;
+    min-height: 300px;
+    max-width: 350px;
+}
+
+/*————————————————————头像————————————————————————*/
+.accountbg img {
+    width: 100px;
+    height: 100px;
+    float: left;
+    top: 0;
+}
+
+.circle {
+    /*水平居中*/
+    margin: 25px auto 25px auto;
+    /*作用于子标签*/
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    /*圆形*/
+    width: 100px;
+    height: 100px;
+
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+/*经过头像改变文字样式*/
+.circle:hover .uploadhead {
+    display: block;
+    color: #fff;
+
+}
+
+.uploadhead {
+    /*浮动*/
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    height: 35px;
+    background-color: #000;
+    opacity: 0.7;
+    color: #fff;
+    font-size: 14px;
+    line-height: 30px;
+    display: none;
+}
+
+.uploadhead input {
+    position: absolute;
+    top: 0;
+    opacity: 0;
+}
+
+.list-profile {
+    margin: 6px 0;
+    font-size: 17px;
+    line-height: 32px;
+    padding-left: 35px;
+}
+
+.profile-heard {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+#editorlink a,
+.verified {
+    color: #b6b6b6;
+    font-size: 13px;
+}
+
+#editorlink a:hover {
+    color: #0097ab;
+}
+
+.secondaryAction {
+    height: 22px;
+    padding: 0 4px;
+    color: #b6b6b6;
+    font-size: 13px;
+    border: 0px;
+    background-color: transparent;
+    line-height: 22px;
+}
+
+.secondaryAction:hover {
+    color: #0097ab;
+    background-color: #e7fcff;
+}
+
+
+/*————————————————————个人网页信息样式————————————————————————*/
+
+#filloutlink a {
+    color: #b6b6b6;
+    font-size: 14px;
+
+}
+
+#filloutlink a:hover {
+    color: #0097ab;
+    background-color: #e7fcff;
+}
+
+.submitlink {
+    font-size: 14px;
+    display: none;
+}
+
+.submitlink input {
+    width: 150px;
+    height: 26px;
+}
+
+.submitlink button {
+    margin-bottom: 2px;
+    width: 42px;
+    height: 30px;
+    padding: 3px 6px;
+    background-color: #00afc6;
+    color: #fff;
+}
+
+.submitlink button:hover {
+    background-color: #0093a6;
+    color: #fff;
+}
+
+.usercontrol {
+    margin-top: 25px;
+}
+
+.usercontrol a {
+    font-size: 13px;
+    padding: 6px 8px;
+    margin: 0 10px;
+    background-color: #00afc6;
+    color: #fff;
+    border-color: transparent;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/*抹掉a点击不变色*/
+.usercontrol a:link {
+    color: #fff;
+}
+
+.usercontrol a:hover {
+    background-color: #0093a6;
+    color: #fff;
+}
+
+/*————————————————————css3实现水纹点击————————————————————————*/
+.usercontrol a:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #666 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .3s, opacity .5s;
+}
+
+.usercontrol a:active:after {
+    transform: scale(0, 0);
+    opacity: .3;
+    transition: 0s;
+}
+</style>
+{% endblock%}
+{% block content %}
+<!-- content -->
+<div class=" contentbg">
+    <div class="accountbg">
+        <h2>个人资料</h2>
+        <hr>
+        <div class="list-group">
+            <div class="circle">
+                <!--user.avatar是文件地址，此处应加/绝对路径,user.avatar.url是保存图片的完整地址-->
+                <img id="avatar" src="{{user.avatar.url}}">
+                <a href="javascript:" class="uploadhead">
+                    <input type="file" name="file" onchange="preview(this)">上传头像
+                </a>
+            </div>
+            <div class="list-profile text-left">
+                <span class="profile-heard">用户名:</span>
+                <span id='username'> {{ user.username }} </span>
+            </div>
+            <div class="list-profile text-left">
+                <span class="profile-heard">邮&emsp;箱:</span>
+                <span id="emil"> {{ user.email }} </span>
+                <!--django-allauth插件后端视图识别验证方法-->
+                {% for emailaddress in user.emailaddress_set.all %}
+                {% if emailaddress.verified %}
+                <span class="verified">{% trans "Verified" %}</span>
+                {% else %}
+                <form action="{% url 'account_email' %}" style="display: inline-block;" method="post">
+                    {% csrf_token %}
+                    <input style="display: none" type="radio" name="email" checked="checked" value="{{emailaddress.email}}">
+                    <button class="secondaryAction" type="submit" name="action_send">发送验证</button>
+                </form>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="list-profile text-left">
+                <span class="profile-heard">网&emsp;址:</span>
+                <span id="link"> {{ user.link }} </span>
+                <!--djaango模板语言判断是否存在link字段-->
+                <span id="filloutlink">
+                    {% if not user.link %}
+                    <!--href="javascript:"阻止a标签跳转刷新页面-->
+                    <a href="javascript:">填写个人网址</a>
+                    {% endif %}
+                </span>
+                <span class="submitlink">
+                    <input type='text' name='' placeholder="请以http:\\开头">
+                    <button class='btn' type='submit'>保存</button>
+                </span>
+                <span id='editorlink'>
+                    {% if user.link %}
+                    <a href="javascript:">编辑</a>
+                    {% endif %}
+                </span>
+            </div>
+            <div>{% if not user.account_verified %}
+                (Unverified email.)
+                {% endif %}</div>
+            <div> </div>
+            <!--django模板语言用is_authenticated判断用户是否登录{% url 'account_logout' %} -->
+            {% if user.is_authenticated %}
+            <div class="usercontrol">
+                <a class="btn " role="button" href="{% url 'account_change_password' %}">更改密码</a>
+                <a class="btn " role="button" href="javascript:" data-toggle="modal" data-target="#logoutmodel">注销用户</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">请选择合适的区域作为头像</h4>
+            </div>
+            <div class="modal-body">
+                <div class="img-container">
+                    <img id="uploadPreview" src="">
+                </div>
+                <div id="error_text" style="display:none"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id='sendPhoto' type="button" class="btn btn-primary">上传头像</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm" id="logoutmodel" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">确认</h4>
+            </div>
+            <div class="modal-body">
+                <p>是否注销登录</p>
+            </div>
+            <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">注销</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript" src="\static\js\cropper.min.js"></script>
+<script type="text/javascript">
+//————————————————————————————————————————cropper裁剪——————————————————————————————————————————
+//直接绑定事件
+function preview(obj) {
+
+    var _alertMsg = document.getElementById('error_text');
+    var _myModalLabel = document.getElementById("myModalLabel");
+
+    //此事件在模态框被隐藏（并且同时在 CSS 过渡效果完成）之后被触发。
+    $('#changeModal').modal('show').on('hidden.bs.modal', function(e) { 
+
+        //关闭模态对话框后清空file input的值
+        $(obj).val('');
+        //隐藏错误提示
+        _alertMsg.style.display = 'none';
+        //清空图片信息
+        document.getElementById("uploadPreview").src = '';
+        $("#uploadPreview").cropper('reset').cropper('replace', '');
+        //摧毁cropper
+        $("#uploadPreview").cropper("destroy");
+        //解绑changeModal的所有事件
+        $('#changeModal').off('shown.bs.modal');
+        $('#changeModal').off('hidden.bs.modal');
+
+    });
+
+    var val = obj.value;
+    //设定可上传的格式
+    var upLoadType = '.jpg&emsp;.gif&emsp;.bmp&emsp;.png';
+    //从字符串中抽出最后一次出现.之后的字符，并且转换成小写
+    var fileExt = val.substr(val.lastIndexOf(".")).toLowerCase();
+    //查找后缀名是否符合条件，如果符合返回>=0，如果不符合则返回负数;
+    var result = upLoadType.indexOf(fileExt);
+    //如果只有一个文件则只需要访问这个FileList对象中的第一个元素.
+    var oFile = obj.files[0];
+    //文件不存在直接返回或者不符合格式
+    if (obj.files.length === 0 || result < 0) {
+        _alertMsg.innerHTML = "请输入正确格式：" + upLoadType;
+        _alertMsg.style.display = 'inline-block';
+        _myModalLabel.innerHTML = "上传出现错误";
+        //隐藏图片容器
+        document.getElementById("uploadPreview").parentElement.style.display = 'none';
+        return;
+    };
+    if (oFile.size / 1024 > 100) {
+        _alertMsg.innerHTML = "请上传100k内的文件";
+        _alertMsg.style.display = 'inline-block';
+        _myModalLabel.innerHTML = "上传出现错误";
+        //隐藏图片容器
+        document.getElementById("uploadPreview").parentElement.style.display = 'none';
+        return;
+    };
+    //CSS过渡完成回调
+    $('#changeModal').on('shown.bs.modal', function() {
+
+        //转为基于file API的Blob对象
+        var blobURL;
+        //URL对象是硬盘（SD卡等）指向文件的一个路径
+        var URL = window.URL || window.webkitURL;
+        //获得一个http格式的url路径
+        blobURL = URL.createObjectURL(oFile);
+
+        document.getElementById("uploadPreview").parentElement.style.display = 'block';
+        document.getElementById("uploadPreview").src = blobURL;
+        //绑定cropper插件
+
+        $("#uploadPreview").cropper({
+            aspectRatio: 1, //1比1
+            viewMode: 3,
+            zoomOnWheel: false, //禁止缩放原图
+            zoomOnTouch: false, //禁止缩放原图
+            ready: function(data) {
+                // Output the result data for cropping image.
+                // And then
+            }
+        });
+        //重置cropper设置并替换生成的cropper图片url
+
+        $("#uploadPreview").cropper('reset').cropper('replace', blobURL);
+        _myModalLabel.innerHTML = "请选择合适的区域作为头像";
+    });
+};
+//————————————————————————————————————————$ Ajax上传图片文件——————————————————————————————————————————
+$('#sendPhoto').on('click', function() {
+
+    var username = document.getElementById('username').innerHTML.trim();
+    // cropper可以得到两种裁剪后图片的数据（即blob和dataURL）,dataURL过于长，此处用toBlob
+    var photo = $("#uploadPreview").cropper('getCroppedCanvas', {
+        width: 100,
+        height: 100,
+    }).toBlob(function(blob) {
+        //因为上传的是文件不是string类型，因此用到H5的FormData方法
+        //组装formdata
+        var fd = new FormData();
+        fd.append('username', username);
+        //fd.append("fileName", "avatar"); fileName为自定义，名字随机生成或者写死，看需求
+        fd.append("avatar", blob); //fileData为自定义,blob包含图片的各种信息
+        fd.append("key","avatar");
+        //ajax上传，ajax的形式随意，JQ的写法也没有问题
+        //需要注意的是服务端需要设定，允许跨域请求。数据接收的方式和<input type="file"/> 上传的文件没有区别
+        $.ajax({
+            url: '/accounts/profile/update/',
+            type: 'post',
+            data: fd,
+            processData: false, //不设置Content-Type请求头
+            contentType: false, //不处理发送的数据
+            success: function(data) {
+                var avaterurl = JSON.parse(data).url;
+                $("#avatar").attr("src", avaterurl);
+                $('#changeModal').modal('hide');
+            },error: function() { console.log("保存失败"); }
+        });
+    });
+});
+/*
+//————————————————————————————————————————JQ的Ajax上传文件FormData——————————————————————————————————————————
+function preview(obj) {
+    var files = $("#uploadPreview").get(0).files[0]; //获取file控件中的内容
+    ////File API提供的FileReader类型读取文件中的数据（4钟）
+    var oFReader = new FileReader();
+    //当图像文件加载后,转换成一个data:URL形式保存在result属性中,最后传递到onload回调函数中
+    oFReader.readAsDataURL(oFile);
+    oFReader.onload = function(oFREvent) {
+        //预览图片 
+        document.getElementById("uploadPreview").src = oFREvent.target.result;
+    };
+    //因为上传的是文件不是string类型，因此用到H5的FormData方法
+    //同时 contentType : false,processData :false,
+    var form = new FormData(document.getElementById("useravater"));
+    //             var req = new XMLHttpRequest();
+    //             req.open("post", "${pageContext.request.contextPath}/public/testupload", false);
+    //             req.send(form);
+    $.ajax({
+        url: '/accounts/profile/update/',
+        type: "post",
+        data: form,
+        processData: false, //不设置Content-Type请求头
+        contentType: false, //不处理发送的数据
+        success: function(data) {
+            var data = JSON.parse(data);
+            console.log("over..");
+        },
+        error: function(e) {
+            alert("错误！！");
+            window.clearInterval(timer);
+        }
+    });
+};
+*/
+//——————————————————————————————————————————————$ Ajax上传json数据—————————————————————————————————————————————————————
+
+
+$('#filloutlink').on("click", function() {
+    $('#filloutlink').hide();
+    $('.submitlink').show();
+});
+$('.submitlink button').on("click", function() {
+    var username = document.getElementById('username').innerHTML.trim();
+    var link = $('.submitlink input').val();
+    $.ajax({
+        url: '/accounts/profile/update/',
+        type: 'POST',
+        data: {
+            'key': 'link',
+            'username': username,
+            'link': link
+        },
+        dataType: 'JSON', // data数据设置为字符串类型（Python后台需把字符串反序列化）
+        success: function(data) {
+            //var obj = JSON.parse(data); // data数据单独设置为字符串类型，反序列化
+            $('.submitlink').hide();
+            if (data.link) {
+
+                $('#link').html(data.link);
+                $('#link').show();
+                $('#editorlink').html('<a href="javascript:">编辑</a>')
+                $('#editorlink').show();
+            } else {
+
+                $('#filloutlink').html('<a href="javascript:">填写个人网址</a>')
+                $('#filloutlink').show();
+            }
+        },
+        error: function() { console.log("错误"); }
+    });
+});
+$('#editorlink').on("click", function() {
+    $('#link').hide();
+    $('#editorlink').hide();
+    var link = document.getElementById('link').innerHTML.trim();
+    $('.submitlink inpout').val('link');
+    $('.submitlink').show();
+});
+
+$('.secondaryAction').on('click', function() {
+    alert('我们已向您发了一封验证e-mail,请点击e-mail中的链接完成注册流程。')
+});
+</script>
+{% endblock %}

@@ -1,0 +1,222 @@
+{%extends "accounts-base.html" %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block csslink %}
+{% endblock %}
+{% block title %} 注册 {% endblock %}
+{% block css %}
+<style type="text/css">
+/*————————————————————登录框————————————————————————*/
+.contentbg {
+    background: #fff;
+    position: fixed;
+    top: 110px;
+    bottom: 0;
+    padding: 0 20px;
+
+}
+
+.accountbg {
+    max-width: 500px;
+    min-height: 382px;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: #eeeeee;
+    /*根据父级标签水平居中*/
+    margin: 0 auto;
+
+    position: relative;
+    top: 100px;
+
+    padding: 0 0 10px 0;
+
+}
+
+/*————————————————————框头标题————————————————————————*/
+
+.sign-heard {
+    max-width: 450px;
+    height: 90px;
+    margin:0 auto;
+
+    /*作用于子标签全部水平居中*/
+    text-align: center;
+}
+
+
+.accountbg hr {
+    margin: 0px 30px 0px 30px;
+}
+
+.accountbg h2 {
+    color: #c5c5c5;
+    height: 90px;
+    width: 50%;
+    /*作用于子标签全部水平居中*/
+    text-align: center;
+    display: inline-block;
+    margin: 0 -2px 0 -2px;
+    padding: 30px 0;
+
+}
+
+#signup {
+    color: #0097ab;
+}
+/*————————————————————标题浮动————————————————————————*/
+
+.sign-heard a {
+    position: relative;
+}
+
+.flothover {
+    width: 0%;
+    height: 4px;
+    left: 50%;
+    margin-top: 87px;
+    background: #00a5bb;
+    display: inline-block;
+    position: absolute;
+     opacity:0;
+    transition:width 0.5s,left 0.5s,opacity 0.2s;
+    -webkit-transition:width 0.6s,left 0.6s,opacity 0.1s;
+}
+
+.sign-heard a:hover .flothover{
+width: 100%;
+left: 0%;
+opacity:1;
+
+}
+
+/*————————————————————css3实现水纹点击————————————————————————*/
+
+.sign-heard h2 {
+    position: relative;
+    overflow: hidden;
+}
+
+.sign-heard h2:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #666 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .3s, opacity .5s;
+}
+
+.sign-heard h2:active:after {
+    transform: scale(0, 0);
+    opacity: .3;
+    transition: 0s;
+}
+
+
+/*——————————————————表单内容———————————————————————*/
+.list-group {
+    margin: 0 auto;
+    min-height: 267px;
+    max-width: 340px;
+    padding: 30px 0 15px 0;
+}
+
+.help-block {
+    font-size: 11px;
+    color: red;
+    margin: 5px 0 0 0;
+
+}
+#submit{
+margin-top: 30px;
+}
+
+#submit button {
+    margin-right: 10px;
+    height: 30px;
+    padding: 3px 6px;
+    background-color: #00afc6;
+    color: #fff;
+}
+
+#submit button:hover {
+    background-color: #0093a6;
+    color: #fff;
+}
+
+#submit p{
+	float: right;
+	padding-top: 8px;
+	font-size: 13px;
+}
+#submit p a{
+    color: #00afc6;
+}
+#submit p a:hover{
+    color:#00889a;
+}
+
+</style>
+{% endblock%}
+{% block content %}
+<!-- content -->
+
+    <div class="contentbg">
+        <div class="accountbg">
+            <div class="sign-heard">
+                <a href="{{ login_url }}">
+                    <span class="flothover"  "></span>
+                    <h2  id='login'>登录</h2>
+                    
+                </a>
+                <a href="{{ signup_url }}">
+                    <span class="flothover"></span>
+                    <h2 id='signup'>注册</h2>
+                    
+                </a>
+            </div>
+            <hr>
+            <div class="list-group">
+                <!-- novalidate临时禁用浏览器的验证功能 -->
+                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}" novalidate='novalidate'>
+                    {% csrf_token %}
+                    <!-- django form对隐藏元素遍历 -->
+                    {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %}
+                    <!-- django form对可见元素遍历 -->
+                    {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <!-- 字段的“id”属性值及字段对应的<label>标签的文字-->
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <!-- django 插件库 widget_tweaks设置样式-->
+                        {{ field|add_class:'form-control' }}
+                        <span class="help-block">{{ field.errors.0 }}</span>
+                    </div>
+                    {% endfor %}
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <div id='submit' class="form-group">
+                        <button  type="submit" class="btn"">注册</button> 
+                        <p >
+                           已有账号？请 <a href="{{ login_url }}">登录</a>
+                      </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+</script>
+{% endblock %}

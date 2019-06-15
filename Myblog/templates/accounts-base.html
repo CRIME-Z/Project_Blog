@@ -1,0 +1,304 @@
+{% load User_tags %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <!--Bootstrap-->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <!--自适应样式-->
+    <link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
+    <!--Font Awesome 图标web link-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+        <!-- 标题栏logo-->
+    <link rel="icon" href="/static/images/logo.ico" type="image/x-icon">
+    <!-- 收藏夹logo-->
+    <link rel="shortcut icon" href="/static/images/logo.ico" type="image/x-icon">
+    {% block csslink %}要替换的css link{%endblock%}
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} 要替换的标题 {% endblock %}</title>
+    <style type="text/css">
+    /*———————————————————————————————首设置——————————————————————————————————*/
+    body {
+        background: #f5f5f5;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover,
+    a:focus {
+        outline: none;
+        text-decoration: none;
+    }
+
+    /*———————————————————————————————导航栏——————————————————————————————————*/
+    #mu-header {
+        display: inline;
+        float: left;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 25px 0;
+        z-index: 999;
+        transition: all 0.5s;
+
+    }
+
+    #mu-header ul {
+        padding: 0;
+
+    }
+
+    #mu-header ul li {
+        list-style: disc;
+        font-size: 17px;
+        line-height: 1.59;
+
+    }
+
+    .mu-navbar {
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        margin-bottom: 0;
+    }
+
+    .navbar-default .navbar-brand,
+    .navbar-default .navbar-brand:hover,
+    .navbar-default .navbar-brand:focus {
+        color: #fff;
+        font-size: 35px;
+        font-family: "微软雅黑", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1";
+        /*微软雅黑电脑默认装有,英文与Unicode编码提高兼容性*/
+        margin-top: 0;
+        width: 120px;
+        line-height: 18px;
+    }
+
+    .navbar-brand img {
+        margin-top: -7px;
+    }
+
+    #mu-header.mu-fixed-nav {
+        width: 100%;
+        position: fixed;
+        padding: 10px 0;
+        background-color: #0097ab;
+    }
+
+    /*———————————————————————————————导航栏背景——————————————————————————————————*/
+    .banner {
+        top: 0px;
+    }
+
+    #mu-featured-slider {
+        background-color: #0097ab;
+        background-attachment: fixed;
+        width: 100%;
+    }
+
+    .header-banner {
+        height: 100px;
+    }
+
+
+    /*———————————————————————————————导航栏隐藏按钮——————————————————————————————————*/
+    .mu-menu {
+        margin-top: 4px;
+        padding: 0, 10px;
+    }
+
+    .navbar-default .mu-menu li a {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 400;
+        padding: 0;
+        margin: 10px 15px;
+        transition: all 0.5s;
+        position: relative;
+    }
+
+    .navbar-default .mu-menu li a::after {
+        background-color: #fff;
+        content: '';
+        height: 2px;
+        width: 100%;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        transform: scale(0);
+        transition: all 0.5s;
+    }
+
+    .navbar-default .mu-menu li a:hover,
+    .navbar-default .mu-menu li a:focus,
+    .navbar-default .navbar-nav>.active>a,
+    .navbar-default .navbar-nav>.active>a:focus,
+    .navbar-default .navbar-nav>.active>a:hover {
+        background-color: transparent;
+        color: #fff;
+    }
+
+    .navbar-default .mu-menu li a:hover::after,
+    .navbar-default .mu-menu li a:focus::after,
+    .navbar-default .navbar-nav>.active>a:focus::after,
+    .navbar-default .navbar-nav>.active>a:hover::after {
+        transform: scale(1);
+    }
+
+    /*———————————————————————————————主体内容——————————————————————————————————*/
+    #section {
+        padding: 0;
+        margin-top: 0px;
+    }
+
+    .section-content {
+        margin-top: 10px;
+        position: relative;
+
+    }
+
+    /*———————————————————————————————footer——————————————————————————————————*/
+    .footerbg {
+        color: #999;
+        width: 100%;
+        background: #f0f0f0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+        font-size: 13px;
+        padding: 16px 0;
+
+    }
+
+    .fixed {
+        position: fixed;
+    }
+
+
+    .footerbg a {
+        color: #737373;
+    }
+    </style>
+    {% block css %}
+    <style type="text/css"></style>
+    {%endblock%}
+</head>
+
+<body>
+    <!--Start Header-->
+    <header id="mu-header" class="headerbg" role="banner">
+        <div class="container">
+            <nav class="navbar navbar-default mu-navbar">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Text Logo -->
+                        <a class="navbar-brand" href="/">EOSONES</a>
+                        <!-- Image Logo -->
+                        <!-- <a class="navbar-brand" href="#"><img src="assets/images/logo.png"></a> -->
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav mu-menu navbar-right">
+                            <li><a href="/homepage/">主页</a></li>
+                            <li><a href="/category/technique/">技术</a></li>
+                            <li><a href="/category/life/">生活</a></li>
+                            <li><a href="/category/project/">合作</a></li>
+                            <li><a href="/category/sponsor/">赞助</a>
+                            <li>
+                            <li>
+                                <!--Django模板语音用is_authenticated判断是否登录 -->
+                                {% if user.is_authenticated %}
+                                <a href="/accounts/login/" title="{{ user.username }}">
+                                    <span class="glyphicon glyphicon-user" aria-hidden=" true"></span>
+                                </a>
+                                {% endif %}
+                                {% if not user.is_authenticated %}
+                                <a href="/accounts/login/" title="登录">
+                                    <span class="glyphicon glyphicon-log-in  aria-hidden=" true"></span>
+                                </a>
+                                {% endif %}
+                            <li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        </div>
+    </header>
+    <!--End Header -->
+    <!--Start banner -->
+    <banner class='banner'>
+        <div id="mu-featured-slider">
+            <div class="header-banner">
+            </div>
+        </div>
+    </banner>
+    <!--End banner-->
+    <section class="container" id="section">
+        <div class="section-content">
+            {% block content %}
+            <div>要替换的内容</div>
+            {% endblock %}
+        </div>
+    </section>
+    <!--footer-->
+    <footer class="footerbg fixed">
+        基于Django构建 © 2019
+        |
+        eosones&#8197;版权所有
+        |
+        <a href="http://www.miitbeian.gov.cn">粤ICP备19057936号</a>
+        |
+        托管于<a href="https://cloud.tencent.com/" title="tencent" target="_blank">&#8197;腾讯云主机</a>
+        |
+        <a href="/sitemap.xml" title="Sitemap" target="_blank">网站地图</a>
+        |
+        当前在线
+        {% get_online_count %}
+    </footer>
+    <script type="text/javascript" src="\static\js\jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="\static\js\bootstrap.min.js"></script>
+    {% block js %} 要替换的js {% endblock %}
+    <script type="text/javascript">
+    (function($) {
+        /*———————————————————————————————导航栏固定——————————————————————————————————*/
+        jQuery(window).bind('scroll', function() { /*给浏览器窗口绑定一个scroll事件*/
+            if ($(window).scrollTop() > 200) {
+                $('#mu-header').addClass('mu-fixed-nav');
+            } else {
+                $('#mu-header').removeClass('mu-fixed-nav');
+            }
+        });
+
+
+        /*———————————————————————————————底部信息栏(需完善)——————————————————————————————————*/
+        var viewW = $(window).width(); //浏览器高度 
+        if (viewW < 767) { //移动页面
+            $('.footerbg').addClass('hidden');
+        }
+        jQuery(window).resize(function() { //实时
+            var viewH = $(window).height(); //浏览器高度 
+            if (viewH > 600) {
+                $('.footerbg').removeClass('hidden');
+            } else if (viewH < 600) {
+                $('.footerbg').addClass('hidden');
+            }
+
+        });
+
+    })(jQuery);
+    </script>
+</body>
+
+</html>

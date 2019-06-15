@@ -1,0 +1,60 @@
+{%extends "accounts-base.html" %}
+{% load i18n %}
+{% block csslink %}
+{% endblock %}
+{% block title %} 个人中心 {% endblock %}
+{% block css %}
+<style type="text/css">
+.contentbg {
+    background: #fff;
+    text-align: center;
+    position: fixed;
+    top: 110px;
+    bottom: 0;
+    padding: 0 20px;
+
+}
+
+.title {
+    border-bottom: 1px solid #eee;
+    padding: 10px 20px 8px;
+
+}
+
+.title h2 {
+    color: #0097ab;
+}
+
+.explain {
+    margin: 50px 0;
+}
+
+.wechat {
+    max-height: 300px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.wechat img {
+    width: 100%;
+}
+</style>
+{% endblock%}
+{% block content %}
+<!-- content -->
+<div class="contentbg">
+    <div class="title">
+        <h2>项目合作</h2>
+    </div>
+    <div class="explain">
+        <p>承接各种个人&团队项目，范围包括但不限于爬虫、Web 开发，如有意向合作可以微信，并注明您的称呼+商务合作，谢谢！</p>
+    </div>
+    <div class="wechat">
+        <img src="\media\images\wechat.png">
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+</script>
+{% endblock %}

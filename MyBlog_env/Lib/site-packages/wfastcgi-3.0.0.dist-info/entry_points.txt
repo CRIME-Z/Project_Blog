@@ -1,0 +1,5 @@
+[console_scripts]
+wfastcgi = wfastcgi:main
+wfastcgi-disable = wfastcgi:disable
+wfastcgi-enable = wfastcgi:enable
+
