@@ -26,7 +26,6 @@ from Storm.sitemaps import ArticleSitemap, CategorySitemap, TagSitemap
 
 # 网站地图
 sitemaps = {
-
     'articles': ArticleSitemap,
     'categories': CategorySitemap,
     'tags': TagSitemap
@@ -50,5 +49,10 @@ urlpatterns = [
     re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     #Rss订阅
     re_path(r'^all/rss/$', AllArticleRssFeed(), name='rss'),
+    #RESTful Api
+    re_path(r'^api/', include('RESTfulApi.urls', namespace='api'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 加入这个才能显示media文件
+
+
+
 

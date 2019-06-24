@@ -13,6 +13,7 @@ django-imagekit==4.0.2
 django-markdownx==2.0.28
 django-mdeditor==0.1.14
 django-widget-tweaks==1.4.3
+django-rest-framework==3.9.4
 idna==2.8
 imagekit==1.0.6
 Markdown==3.1

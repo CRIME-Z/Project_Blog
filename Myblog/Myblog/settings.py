@@ -20,15 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'XXX'
+SECRET_KEY = 'o3ie_i1y#4v*1_r7@4zez=$t=d&k43e19a@z04j^3^nnd1tp@b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #测试环境
 DEBUG =  True
-#线上关闭，'django.contrib.staticfiles'失效，不再有报错新信息
+#线上环境，'django.contrib.staticfiles'失效，不再有报错新信息
 #DEBUG = False
-
-ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -39,8 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    #'django.contrib.staticfiles',
 
      # django-allauth必须安装的app
     'django.contrib.auth',
@@ -55,16 +51,24 @@ INSTALLED_APPS = [
     'widget_tweaks',
     # 网站地图应用
     'django.contrib.sitemaps',
-    #admin编辑器
+    # RESTful API接口
+    'rest_framework',
+    # admin编辑器
     "mdeditor",
-    #allauth用户个人资料扩展新建APP
+    #a llauth用户个人资料扩展新建APP
     'Myaccount',
     # 博客应用
     'Storm',  
     # 评论应用
     'Comment',  
-
 ]
+
+
+ALLOWED_HOSTS = ['.eosones.com','*']
+
+import sys
+# 添加 apps 目录
+sys.path.insert(0, os.path.join(BASE_DIR, 'Apps'))
 
  # django-allauth相关设置
 AUTHENTICATION_BACKENDS = (
@@ -94,19 +98,19 @@ LOGIN_REDIRECT_URL = '/accounts/profile/'
 EMAIL_HOST = 'smtp.qq.com'
 # 默认端口25，请求超时可尝试465
 EMAIL_PORT = 465
-#帐号xx
-EMAIL_HOST_USER = 'xxx@qq.com'
+#帐号
+EMAIL_HOST_USER = 'xxxxxx@qq.com'
 # 授权码（注意不是密码）
-EMAIL_HOST_PASSWORD = 'xxx'
+EMAIL_HOST_PASSWORD = 'xxxxxx'
 # 是否使用了SSL 或者TLS
 # EMAIL_USE_TLS = True  
 EMAIL_USE_SSL = True
 #发送人
-EMAIL_FROM = 'xxx@qq.com' 
+EMAIL_FROM = 'xxxxxx@qq.com' 
 # 默认显示的发送人，（邮箱地址必须与发送人一致），不设置的话django默认使用的webmaster@localhost
-DEFAULT_FROM_EMAIL = 'EOSONES博客 <374542101@qq.com>'
+DEFAULT_FROM_EMAIL = 'EOSONES博客 <xxxxxx@qq.com>'
 
-#__________________________________________________________________________________________________
+#___________________________________________________________________________________________________________________________________
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,15 +147,13 @@ WSGI_APPLICATION = 'Myblog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-import sys
-# 添加 apps 目录
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Myblog',
-        'USER': 'root', 
+        'NAME': 'myblog',
+        'USER': 'xxx', 
         'PASSWORD': 'xxx',
         'HOST':'localhost',
         'PORT':'3306',
@@ -199,18 +201,21 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-# 静态文件收集
+#利用前缀 STATIC_URL的具体内容,来映射STATIC_ROOT
 STATIC_URL = '/static/'
+
 #当执行python manage.py collectstatic时, 收集的静态文件放在该目录下.
 #django会将STATICFILES_DIRS下的所有文件以及admin所需要用到的js,css,image文件全都放到STATIC_ROOT目录下.
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'collect_static')
 
+#测试环境静态文件目录
 STATICFILES_DIRS=(
-    os.path.join(BASE_DIR,'STATIC'),
+    os.path.join(BASE_DIR,'static'),
 )
 
 # 媒体文件专属参数设置（需要加url识别才能访问）
 MEDIA_URL = "/media/"   # 媒体文件别名(相对路径) 和 绝对路径
+
 #存放上传的文件
 MEDIA_ROOT = (
     os.path.join(BASE_DIR, 'media')
@@ -219,12 +224,12 @@ MEDIA_ROOT = (
 # 如果使用自定义用户model user，为了让 Django 能够识别自定义的用户模型，必须在此处添加app.自定义表名
 AUTH_USER_MODEL = 'Myaccount.User'
 
-#一个网站最基本的SEO就是设置TDK
+#网站最基本的SEO设置TDK
 # 网站描述
 SITE_DESCRIPTION = "EOSONES的个人网站，记录生活的瞬间，分享学习的心得"
 # 网站关键词
 SITE_KEYWORDS = "EOSONES,网络,IT,技术,博客,Python"
 # 网站页面
-SITE_END_TITLE = "EOSONES的个人博客"
+SITE_END_TITLE = "EOSONES个人博客"
 
 

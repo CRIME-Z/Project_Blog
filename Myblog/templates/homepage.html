@@ -10,7 +10,7 @@
     <!-- 收藏夹logo-->
     <link rel="shortcut icon" href="/static/images/logo.ico" type="image/x-icon">
     <!--Bootstrap-->
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!--blog自适应样式-->
     <link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
     <!--Font Awesome 图标web link-->
@@ -85,7 +85,7 @@
     /*———————————————————————————————banner——————————————————————————————————*/
 
     #mu-featured-slider {
-        background: url(/media/images/HP-bg.PNG) no-repeat top;
+        background: url(/static/images/HP-bg.png) no-repeat top;
         background-size: 20%;
         background-position: center;
         background-position-x: -1080px;
@@ -575,7 +575,7 @@
                         <div class="mu-featured-area">
                             <h1>EOSONES <small>• 个人博客</small></h1>
                             <div class="mu-featured-content">
-                                <p>记录生活的瞬间，分享学习的心得，感悟生活，高效学习</p>
+                                <p>做任何毫不费力的事情,都是在浪费时间</p>
                             </div>
                         </div>
                     </div>
@@ -653,7 +653,7 @@
                                 <span class="me-icon sider-but glyphicon glyphicon-qrcode" aria-hidden="true"></span>
                                 Wechat
                             </a>
-                            <img src="/media/images/wechat.png" />
+                            <img src="/static/images/wechat.png" />
                         </span>
                         <span class="me-contnet">
                             <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=Dzw4Ozo7PT4-Pk9_fiFsYGI" style="text-decoration:none;">
@@ -730,8 +730,8 @@
         当前在线
         {% get_online_count %}
     </footer>
-    <script type="text/javascript" src="\static\js\jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="\static\js\bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">
     /*———————————————————————————————底部信息栏(需完善)——————————————————————————————————*/
     var viewH = $(window).height(); //浏览器高度 
