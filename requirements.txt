@@ -6,7 +6,7 @@ cryptography==2.7
 defusedxml==0.6.0
 pilkit==2.0
 Pillow==6.0.0
-Django==2.1.7
+Django==2.2.13
 django-allauth==0.39.1
 django-appconf==1.0.3
 django-imagekit==4.0.2
